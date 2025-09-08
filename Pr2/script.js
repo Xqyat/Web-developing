@@ -1,269 +1,598 @@
-// №1
+const select = document.getElementById('taskSelector');
+for(let i=1; i<=63; i++) {
+  const option = document.createElement('option');
+  option.value = i;
+  option.text = `Задание №${i}`;
+  select.appendChild(option);
+}
 
-let rectangleLength = 5;
-let rectangleWidth = 10;
-let rectangleArea = rectangleLength * rectangleWidth;
-console.log("Rectangle area -", rectangleArea);
+// Конфигурация параметров для каждого задания
+const tasksParams = {
+  1: [{name:'length',label:'Длина'}, {name:'width',label:'Ширина'}],
+  2: [{name:'length',label:'Длина стороны квадрата'}],
+  3: [{name:'celsius',label:'Градусы Цельсия'}],
+  4: [{name:'dividend',label:'Делимое'}, {name:'divider',label:'Делитель'}],
+  5: [{name:'a',label:'Первый множитель'}, {name:'b',label:'Второй множитель'}],
+  6: [{name:'number',label:'Число'}],
+  7: [{name:'hours',label:'Часы'}],
+  8: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  9: [{name:'birthYear',label:'Год рождения'}],
+  10: [{name:'a',label:'Первое слагаемое'}, {name:'b',label:'Второе слагаемое'}],
+  11: [],
+  12: [{name:'n',label:'Число N'}],
+  13: [{name:'n',label:'Число для факториала'}],
+  14: [],
+  15: [],
+  16: [],
+  17: [],
+  18: [{name:'n',label:'Число для факториала'}],
+  19: [],
+  20: [{name:'symbol',label:'Символ'}, {name:'n',label:'Количество'}],
+  21: [{name:'num',label:'Число'}],
+  22: [{name:'points',label:'Баллы'}],
+  23: [{name:'num',label:'Число'}],
+  24: [{name:'num',label:'Число'}],
+  25: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  26: [{name:'year',label:'Год'}],
+  27: [{name:'degrees',label:'Температура'}],
+  28: [{name:'num',label:'Число'}],
+  29: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  30: [{name:'symbol',label:'Символ'}],
+  31: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  32: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  33: [{name:'num',label:'Число'}],
+  34: [{name:'num',label:'Число'}],
+  35: [{name:'num',label:'Число'}],
+  36: [{name:'celsius',label:'Градусы Цельсия'}],
+  37: [{name:'base',label:'Основание'}, {name:'exp',label:'Степень'}],
+  38: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  39: [{name:'a',label:'Первое число'}, {name:'b',label:'Второе число'}],
+  40: [{name:'age',label:'Возраст'}],
+  41: [{name:'array',label:'Массив (через запятую)'}],
+  42: [{name:'array',label:'Массив (через запятую)'}],
+  43: [{name:'array',label:'Массив (через запятую)'}, {name:'element',label:'Добавляемый элемент'}],
+  44: [{name:'array',label:'Массив (через запятую)'}, {name:'element',label:'Добавляемый элемент'}],
+  45: [{name:'array',label:'Массив (через запятую)'}],
+  46: [{name:'array',label:'Массив (через запятую)'}],
+  47: [{name:'array',label:'Массив (через запятую)'}],
+  48: [{name:'array1',label:'Массив 1 (через запятую)'}, {name:'array2',label:'Массив 2 (через запятую)'}],
+  49: [{name:'array',label:'Массив (через запятую)'}, {name:'count',label:'Кол-во удаляемых'}],
+  50: [{name:'array',label:'Массив (через запятую)'}, {name:'index',label:'Индекс'}],
+  51: [{name:'array',label:'Массив (через запятую)'}],
+  52: [{name:'string',label:'Строка'}],
+  53: [{name:'array',label:'Массив (через запятую)'}],
+  54: [{name:'array',label:'Массив (через запятую)'}],
+  55: [{name:'array',label:'Массив (через запятую)'}],
+  56: [{name:'name',label:'Имя'}, {name:'age',label:'Возраст'}],
+  57: [{name:'person',label:'Объект JSON'}, {name:'city',label:'Город'}],
+  58: [{name:'person',label:'Объект JSON'}],
+  59: [{name:'person',label:'Объект JSON'}, {name:'newName',label:'Новое имя'}],
+  60: [{name:'obj',label:'Объект JSON'}, {name:'name',label:'Имя свойства'}],
+  61: [{name:'obj',label:'Объект JSON'}, {name:'name',label:'Имя свойства'}],
+  62: [{name:'obj1',label:'Объект JSON 1'}, {name:'obj2',label:'Объект JSON 2'}],
+  63: [{name:'obj',label:'Объект JSON'}]
+};
+
+// Кешируем элементы DOM
+const container = document.getElementById('inputsContainer');
+const runButton = document.getElementById('runButton');
+const resultOutput = document.getElementById('resultOutput');
+
+// При выборе задания показываем поля ввода
+select.addEventListener('change', () => {
+  container.innerHTML = '';
+  const task = parseInt(select.value);
+  if (isNaN(task)) return;
+
+  const params = tasksParams[task] || [];
+  params.forEach(param => {
+    const inputType = (param.name.includes('array') || param.name === 'person' || param.name.startsWith('obj')) ? 'text' : 'number';
+    const input = document.createElement('input');
+    input.type = inputType;
+    input.name = param.name;
+    input.placeholder = param.label;
+    input.style.marginRight = '10px';
+    container.appendChild(input);
+  });
+});
+
+// Преобразование входного значения из поля
+function parseInputValue(value, name) {
+  if (name.includes('array') || name === 'person' || name.startsWith('obj')) {
+    try {
+      return JSON.parse(value);
+    } catch {
+      if (name.includes('array')) {
+        return value.split(',').map(s => s.trim()).map(s => isNaN(s) ? s : Number(s));
+      }
+      return value;
+    }
+  }
+  return isNaN(value) || value === '' ? value : Number(value);
+}
+
+// №1
+function calculateRectangleArea(length, width) {
+    return "Rectangle area - " + (length * width);
+}
 
 // №2
-
-let squareLength = 7;
-let squarePerimetr = squareLength*4;
-console.log("Square perimetr -", squarePerimetr);
+function calculateSquarePerimeter(length) {
+    return "Square perimeter - " + (length * 4);
+}
 
 // №3
-
-let Celsius = 36.6;
-let Fahrenheit = (Celsius * 9/5) + 32;
-console.log("Celsius in Fahrenheit -", Fahrenheit.toFixed(2));
+function celsiusToFahrenheit(celsius) {
+    return "Celsius in Fahrenheit - " + ((celsius * 9 / 5) + 32).toFixed(2);
+}
 
 // №4
-
-let dividend = 20;
-let divider = 8;
-let quotient = (dividend%divider);
-console.log("Quotient -", quotient);
+function calculateRemainder(dividend, divider) {
+    return "Remainder - " + (dividend % divider);
+}
 
 // №5
-
-let firstMultiplier = 20;
-let secondMultiplier = 10;
-let product = firstMultiplier * secondMultiplier;
-console.log("Product -", product);
+function calculateProduct(a, b) {
+    return "Product - " + (a * b);
+}
 
 // №6
-
-let sixthNum = 20;
-if (sixthNum % 2 == 0) {
-    console.log(sixthNum, "is even");
-} else {
-    console.log(sixthNum, "isn't even");
+function checkEven(number) {
+    return number + (number % 2 === 0 ? " is even" : " isn't even");
 }
 
 // №7
-
-let hours = 1;
-let minutes = hours * 60;
-console.log(hours, "hour(s) =", minutes, "minute(s)");
+function hoursToMinutes(hours) {
+    return hours + " hour(s) = " + (hours * 60) + " minute(s)";
+}
 
 // №8
-
-let firstComparedNum = 5;
-let secondComparedNum = 6;
-if (firstComparedNum > secondComparedNum) {
-    console.log(firstComparedNum, "is bigger than", secondComparedNum)
-} else if (firstComparedNum < secondComparedNum) {
-    console.log(firstComparedNum, "is less than", secondComparedNum)
-} else {
-    console.log(firstComparedNum, "=", secondComparedNum)
+function compareNumbers(a, b) {
+    if (a > b) return a + " is bigger than " + b;
+    if (a < b) return a + " is less than " + b;
+    return a + " = " + b;
 }
 
 // №9
-
-let birthDate = 2001;
-var currentYear = new Date().getFullYear()
-let personAge = currentYear - birthDate;
-console.log("Person is", personAge, "years old")
+function calculateAge(birthYear) {
+    let currentYear = new Date().getFullYear();
+    return "Person is " + (currentYear - birthYear) + " years old";
+}
 
 // №10
-
-let firstSummand = 20;
-let secondSummand = 10;
-let sum = firstSummand * secondSummand;
-console.log("Sum -", sum);
+function calculateSum(a, b) {
+    return "Sum - " + (a + b);
+}
 
 // №11
-
-for (let i = 0; i <= 10; i++) {
-    console.log(i)
+function printNumbersUpTo10() {
+    let result = [];
+    for (let i = 0; i <= 10; i++) {
+        result.push(i);
+    }
+    return result;
 }
 
 // №12
-
-let nNum = 8;
-let nNumSum = 0
-for (let i = 0; i <= nNum; i++) {
-    nNumSum = nNumSum + i;
+function sumNumbersToN(n) {
+    let sum = 0;
+    for (let i = 0; i <= n; i++) {
+        sum += i;
+    }
+    return "N = " + sum;
 }
-console.log("N =", nNumSum)
 
 // №13
-
-let factorial = 3;
-let factorialSum = 1;
-if (factorial === 0){
-    console.log(1)
-}else{
-    for (let i = 1; i <= factorial; i++) {
-        factorialSum *= i;
+function factorial(n) {
+    if (n === 0) return 1;
+    let fact = 1;
+    for (let i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
 }
-console.log(factorialSum);
-};
 
 // №14
-
-for (let i = 1; i <= 20; i++) {
-    if (i % 2 ==0){
-        console.log(i);
+function printEvenNumbersTo20() {
+    let result = [];
+    for (let i = 1; i <= 20; i++) {
+        if (i % 2 === 0) result.push(i);
     }
-    else{
-        continue;
-    }
+    return result;
 }
 
 // №15
-
-for (let i = 1; i <= 10; i++) {
-    console.log("5 x", i, "=", 5*i);
+function multiplicationTable5() {
+    let result = [];
+    for (let i = 1; i <= 10; i++) {
+        result.push("5 x " + i + " = " + (5 * i));
+    }
+    return result;
 }
 
 // №16
-
-let sumMultipleThree = 1;
-for (let i = 1; i <= 10; i++) {
-    if (i % 3 == 0){
-        sumMultipleThree = sumMultipleThree * i;
-    }else{
-        continue;
+function productMultiplesOf3To10() {
+    let product = 1;
+    for (let i = 1; i <= 10; i++) {
+        if (i % 3 === 0) product *= i;
     }
+    return product;
 }
-console.log(sumMultipleThree);
 
-// №17 
-
-for (let i = 10; i >= 1; i--) {
-    console.log(i)
+// №17
+function printNumbersDownFrom10() {
+    let result = [];
+    for (let i = 10; i >= 1; i--) {
+        result.push(i);
+    }
+    return result;
 }
 
 // №18
-
-let nNumMulitiplying = 6;
-let nNumMulitiplyingSum = 1;
-for (let i = 1; i <= nNumMulitiplying; i++) {
-    nNumMulitiplyingSum = nNumMulitiplyingSum * i;
+function factorialN(n) {
+    let fact = 1;
+    for (let i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
 }
-console.log(nNumMulitiplyingSum)
 
 // №19
-
-let numsMultipleSeven = 1;
-for (let i = 1; i <= 100; i++) {
-    if (i % 7 == 0){   
-        console.log(i);
-    }else{
-        continue;
+function multiplesOf7To100() {
+    let result = [];
+    for (let i = 1; i <= 100; i++) {
+        if (i % 7 === 0) result.push(i);
     }
+    return result;
 }
 
 // №20
-
-let nSymbol = "h";
-let nNum20 = 3;
-for (let i = 1; i <= nNum20; i++){
-    console.log(nSymbol)
+function printSymbolNTimes(symbol, n) {
+    let result = [];
+    for (let i = 1; i <= n; i++) {
+        result.push(symbol);
+    }
+    return result;
 }
 
 // №21
-
-let randomNum = 2;
-if (randomNum > 0){
-    console.log(randomNum," is positive")
-}else if(randomNum < 0){
-    console.log(randomNum," is negative")
-}else{
-    console.log(randomNum," is zero")
+function checkPositiveNegativeZero(num) {
+    if (num > 0) return num + " is positive";
+    if (num < 0) return num + " is negative";
+    return num + " is zero";
 }
 
 // №22
-
-let points = 75;
-if (points >= 90){
-    console.log("Great")
-}else if(points >= 70){
-    console.log("Good")
-}else if(points >= 50){
-    console.log("Okay")
-}else if(points >= 30){
-    console.log("Bad")
-}else if(points < 30){
-    console.log("Awful")
+function pointAssessment(points) {
+    if (points >= 90) return "Great";
+    if (points >= 70) return "Good";
+    if (points >= 50) return "Okay";
+    if (points >= 30) return "Bad";
+    return "Awful";
 }
 
 // №23
-
-let randomNum23 = 14;
-if (randomNum23 % 3 == 0){
-    console.log(randomNum23,"is a multiple of 3")
-}else{
-    console.log(randomNum23,"isn't a multiple of 3")
+function isMultipleOf3(num) {
+    return num + (num % 3 === 0 ? " is a multiple of 3" : " isn't a multiple of 3");
 }
 
 // №24
-
-let randomNum24 = 23;
-if (randomNum24 % 2 == 0) {
-    console.log(randomNum24, "is even");
-} else {
-    console.log(randomNum24, "is odd");
+function evenOrOdd(num) {
+    return num + (num % 2 === 0 ? " is even" : " is odd");
 }
 
 // №25
-
-let firstRandomNum = 53;
-let secondRandomNum = 10;
-if (firstRandomNum > secondRandomNum) {
-    console.log(firstRandomNum, "is bigger than", secondRandomNum)
-} else if (firstRandomNum < secondRandomNum) {
-    console.log(firstRandomNum, "is less than", secondRandomNum)
-} else {
-    console.log(firstRandomNum, "=", secondRandomNum)
+function compareTwoNumbers(a, b) {
+    if (a > b) return a + " is bigger than " + b;
+    if (a < b) return a + " is less than " + b;
+    return a + " = " + b;
 }
 
 // №26
-
-let randomYear = 1900;
-if (randomYear % 4 == 0 && randomYear % 100 != 0 || randomYear % 400 == 0){
-    console.log(randomYear,"is leap year")
-}else{
-    console.log(randomYear,"isn't leap year")
+function isLeapYear(year) {
+    if ((year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0)) return year + " is leap year";
+    return year + " isn't leap year";
 }
 
 // №27
-
-let degrees = 12;
-
-if (degrees < 10){
-    console.log("You should wear a jacket")
-}else if(degrees < 1){
-    console.log("You should wear a gloves")
-}else{
-    console.log("You should wear whatever you want")
+function dressAdvice(degrees) {
+    if (degrees < 1) return "You should wear gloves";
+    if (degrees < 10) return "You should wear a jacket";
+    return "You should wear whatever you want";
 }
 
 // №28
-
-let randomNum28 = 55;
-if (randomNum28 % 5 == 0 && randomNum28 % 11 == 0){
-    console.log(randomNum28, "is a multiple of 5 and 11 at the same time")
-}else{
-    console.log(randomNum28, "isn't a multiple of 5 and 11 at the same time")
+function multipleOf5And11(num) {
+    if (num % 5 === 0 && num % 11 === 0) return num + " is a multiple of 5 and 11 at the same time";
+    return num + " isn't a multiple of 5 and 11 at the same time";
 }
 
 // №29
-
-let firstRandomNum29 = 23;
-let secondRandomNum29 = 20;
-if (firstRandomNum29 == secondRandomNum29) {
-    console.log(firstRandomNum29, "=", secondRandomNum29)
-} else {
-    console.log(firstRandomNum29, "!=", secondRandomNum29)
+function checkEquality(a, b) {
+    return a === b ? a + " = " + b : a + " != " + b;
 }
 
-// №30 
-
-let randomSymbol = "y"
-if (/[A-Za-z-А-Яа-я]/.test(randomSymbol)){
-    console.log(randomSymbol, "is a letter")
-}else{
-    console.log(randomSymbol, "isn't a letter")
+// №30
+function isLetter(symbol){
+    return /[A-Za-zА-Яа-я]/.test(symbol) ? symbol + " is a letter" : symbol + " isn't a letter";
 }
+
+// №31
+function summary(a, b) {
+    return a + b;
+}
+
+// №32
+function multiplying(a, b) {
+    return a * b;
+}
+
+// №33
+function evenOddChecker(num) {
+    return num % 2 === 0;
+}
+
+// №34
+function factorialFunction(num) {
+    if (num === 0) return 1;
+    let fact = 1;
+    for (let i = 1; i <= num; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+// №35
+function numMultipleThree(num) {
+    return num % 3 === 0;
+}
+
+// №36
+function celsiusToFahrenheitFunction(celsius) {
+    return ((celsius * 9 / 5) + 32).toFixed(2);
+}
+
+// №37
+function power(base, exponent) {
+    return Math.pow(base, exponent);
+}
+
+// №38
+function smallestNum(a, b) {
+    if (a > b) return b + " is smallest";
+    if (a < b) return a + " is smallest";
+    return "Numbers are equal";
+}
+
+// №39
+function largestNum(a, b) {
+    if (a < b) return b + " is largest";
+    if (a > b) return a + " is largest";
+    return "Numbers are equal";
+}
+
+// №40
+function checkAge(age) {
+    return age >= 18 ? "Совершеннолетний" : "Несовершеннолетний";
+}
+
+// №41
+function printArrayElements(array) {
+    return array;
+}
+
+// №42
+function findFirstEven(array) {
+    return array.find(e => e % 2 === 0);
+}
+
+// №43
+function pushArray(array, element) {
+    array.push(element);
+    return array;
+}
+
+// №44
+function unshiftArray(array, element) {
+    array.unshift(element);
+    return array;
+}
+
+// №45
+function mapDoubleArray(array) {
+    return array.map(e => e * 2);
+}
+
+// №46
+function popArray(array) {
+    array.pop();
+    return array;
+}
+
+// №47
+function shiftArray(array) {
+    array.shift();
+    return array;
+}
+
+// №48
+function concatArrays(array1, array2) {
+    return array1.concat(array2);
+}
+
+// №49
+function spliceArrayStart(array, count) {
+    array.splice(0, count);
+    return array;
+}
+
+// №50
+function spliceArrayFromIndex(array, index) {
+    let newArray = array.splice(index);
+    return { originalArray: array, newArray };
+}
+
+// №51
+function joinArrayToString(array) {
+    return array.join('');
+}
+
+// №52
+function splitStringToArray(string) {
+    return string.split('');
+}
+
+// №53
+function sumArray(array) {
+    return array.reduce((acc, val) => acc + val, 0);
+}
+
+// №54
+function multiplyArrayBy10(array) {
+    return array.map(e => e * 10);
+}
+
+// №55
+function findFirstNegative(array) {
+    return array.find(e => e < 0);
+}
+
+// №56
+function createPerson(name, age) {
+    return { name, age };
+}
+
+// №57
+function addCityToPerson(person, city) {
+    person.city = city;
+    return person;
+}
+
+// №58
+function deleteAgeFromPerson(person) {
+    delete person.age;
+    return person;
+}
+
+// №59
+function changePersonName(person, newName) {
+    person.name = newName;
+    return person;
+}
+
+// №60
+function nameChecker(obj, name) {
+    return Object.hasOwn(obj, name);
+}
+
+// №61
+function nameShowing(obj, name) {
+    return obj[name];
+}
+
+// №62
+function objectComparison(obj1, obj2) {
+    return obj1 === obj2;
+}
+
+// №63
+function printObjectKeys(obj) {
+    return Object.keys(obj);
+}
+
+
+function getFunctionByTask(task) {
+  switch(task) {
+    case 1: return calculateRectangleArea;
+    case 2: return calculateSquarePerimeter;
+    case 3: return celsiusToFahrenheit;
+    case 4: return calculateRemainder;
+    case 5: return calculateProduct;
+    case 6: return checkEven;
+    case 7: return hoursToMinutes;
+    case 8: return compareNumbers;
+    case 9: return calculateAge;
+    case 10: return calculateSum;
+    case 11: return printNumbersUpTo10;
+    case 12: return sumNumbersToN;
+    case 13: return factorial;
+    case 14: return printEvenNumbersTo20;
+    case 15: return multiplicationTable5;
+    case 16: return productMultiplesOf3To10;
+    case 17: return printNumbersDownFrom10;
+    case 18: return factorialN;
+    case 19: return multiplesOf7To100;
+    case 20: return printSymbolNTimes;
+    case 21: return checkPositiveNegativeZero;
+    case 22: return pointAssessment;
+    case 23: return isMultipleOf3;
+    case 24: return evenOrOdd;
+    case 25: return compareTwoNumbers;
+    case 26: return isLeapYear;
+    case 27: return dressAdvice;
+    case 28: return multipleOf5And11;
+    case 29: return checkEquality;
+    case 30: return isLetter;
+    case 31: return summary;
+    case 32: return multiplying;
+    case 33: return evenOddChecker;
+    case 34: return factorialFunction;
+    case 35: return numMultipleThree;
+    case 36: return celsiusToFahrenheitFunction;
+    case 37: return power;
+    case 38: return smallestNum;
+    case 39: return largestNum;
+    case 40: return checkAge;
+    case 41: return printArrayElements;
+    case 42: return findFirstEven;
+    case 43: return pushArray;
+    case 44: return unshiftArray;
+    case 45: return mapDoubleArray;
+    case 46: return popArray;
+    case 47: return shiftArray;
+    case 48: return concatArrays;
+    case 49: return spliceArrayStart;
+    case 50: return spliceArrayFromIndex;
+    case 51: return joinArrayToString;
+    case 52: return splitStringToArray;
+    case 53: return sumArray;
+    case 54: return multiplyArrayBy10;
+    case 55: return findFirstNegative;
+    case 56: return createPerson;
+    case 57: return addCityToPerson;
+    case 58: return deleteAgeFromPerson;
+    case 59: return changePersonName;
+    case 60: return nameChecker;
+    case 61: return nameShowing;
+    case 62: return objectComparison;
+    case 63: return printObjectKeys;
+    default: return null;
+  }
+}
+
+// Обработчик кнопки "Выполнить"
+runButton.addEventListener('click', () => {
+  const task = parseInt(select.value);
+  if (!task) {
+    resultOutput.textContent = "Пожалуйста, выберите задание.";
+    return;
+  }
+  const inputs = container.querySelectorAll('input');
+  const args = [];
+  inputs.forEach(input => args.push(parseInputValue(input.value, input.name)));
+
+  const func = getFunctionByTask(task);
+  if (!func) {
+    resultOutput.textContent = "Функция для данного задания не найдена.";
+    return;
+  }
+
+  try {
+    const res = func(...args);
+    if (Array.isArray(res)) resultOutput.textContent = res.join('\n');
+    else if (typeof res === 'object') resultOutput.textContent = JSON.stringify(res, null, 2);
+    else resultOutput.textContent = res;
+  } catch(e) {
+    resultOutput.textContent = "Ошибка выполнения: " + e.message;
+  }
+});
