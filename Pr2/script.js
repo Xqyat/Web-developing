@@ -6,7 +6,6 @@ for(let i=1; i<=63; i++) {
   select.appendChild(option);
 }
 
-// Конфигурация параметров для каждого задания
 const tasksParams = {
   1: [{name:'length',label:'Длина'}, {name:'width',label:'Ширина'}],
   2: [{name:'length',label:'Длина стороны квадрата'}],
@@ -73,12 +72,10 @@ const tasksParams = {
   63: [{name:'obj',label:'Объект JSON'}]
 };
 
-// Кешируем элементы DOM
 const container = document.getElementById('inputsContainer');
 const runButton = document.getElementById('runButton');
 const resultOutput = document.getElementById('resultOutput');
 
-// При выборе задания показываем поля ввода
 select.addEventListener('change', () => {
   container.innerHTML = '';
   const task = parseInt(select.value);
@@ -96,7 +93,6 @@ select.addEventListener('change', () => {
   });
 });
 
-// Преобразование входного значения из поля
 function parseInputValue(value, name) {
   if (name.includes('array') || name === 'person' || name.startsWith('obj')) {
     try {
@@ -570,7 +566,6 @@ function getFunctionByTask(task) {
   }
 }
 
-// Обработчик кнопки "Выполнить"
 runButton.addEventListener('click', () => {
   const task = parseInt(select.value);
   if (!task) {
