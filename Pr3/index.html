@@ -6,18 +6,38 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Задачи по JavaScript Пр3</h1>
-    <select id="taskSelector">
-        <option value="">--Выберите задание--</option>
-    </select>
+    <h1 style="font-size: 50px;">Задачи по JavaScript Пр3</h1>
+    <h2 style="font-size: 30px;">Блок 1 - Обработчики событий</h2>
+    <h3>Задание 1</h3>
+    <p id="header">Исходный заголовок</p>
+    <button id="changeHeaderBtn">Изменить заголовок</button>
+    <hr>
+    <h3>Задание 2</h3>
+    <div class="box">Наведи на меня</div>
+    <hr>
+    <h3>Задание 3</h3>
+    <input type="text" id="inputField" placeholder="Введите текст">
+    <div id="output"></div>
+    <hr>
+    <h3>Задание 4</h3>
+    <div id="backgroundBox" style="width:100px; height:100px; background:#ccc; margin-top:10px;">Двойной клик</div>
+    <hr>
+    <h3>Задание 5</h3>
+    <label><input type="checkbox" id="agreeCheckbox"> Согласен</label>
+    <button id="submitButton" disabled>Отправить</button>
+    <hr>
+    <h3>Задание 6</h3>
+    <div id="windowSize" style="margin: 10px 0; font-weight:bold;"></div>
+    <hr>
+    <h3>Задание 7</h3>
+    <a href="#" id="link">Ссылка</a>
 
-    <div id="inputsContainer" style="margin-top:15px;"></div>
+    <div id="hideMe" style="width:100px;height:50px;background:#eee;margin-top:10px;cursor:pointer;">Кликни чтобы скрыть</div>
 
-    <button id="runButton" style="margin-top:10px;">Выполнить</button>
+    <input type="text" id="textField" placeholder="Максимум 10 символов" />
 
-    <h3>Результат:</h3>
-    <pre id="resultOutput" style="background:#f0f0f0; padding:10px; min-height:50px;"></pre>
-
+    <button id="toggleButton">Переключить</button>
+    <div id="toggleBox" class="inactive" style="width:100px;height:50px;margin-top:10px;">Box</div>
     
     <script src="script.js"></script>
 </body>

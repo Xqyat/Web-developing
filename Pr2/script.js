@@ -83,7 +83,16 @@ select.addEventListener('change', () => {
 
   const params = tasksParams[task] || [];
   params.forEach(param => {
-    const inputType = (param.name.includes('array') || param.name === 'person' || param.name.startsWith('obj')) ? 'text' : 'number';
+    const inputType = 
+  (param.name.includes('array') 
+   || param.name === 'person' 
+   || param.name.startsWith('obj')
+   || param.name === 'name' 
+   || param.name === 'newName'  
+   || param.name === 'city'     
+   ) ? 'text' : 'number';
+
+
     const input = document.createElement('input');
     input.type = inputType;
     input.name = param.name;
@@ -488,7 +497,7 @@ function nameShowing(obj, name) {
 
 // №62
 function objectComparison(obj1, obj2) {
-    return obj1 === obj2;
+    return JSON.stringify(obj1) === JSON.stringify(obj2);
 }
 
 // №63
