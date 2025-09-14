@@ -4,16 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>.gallery-row {
+        display: flex;
+        margin-bottom: 10px;
+      }
+      
+      .gallery-row img {
+        width: 100px;
+        height: 100px;
+        margin-right: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        object-fit: cover;
+      }
+      
+      .gallery-row img.active {
+        width: 200px;
+        height: 200px;
+      }
+      
+      .gallery-row img.inactive {
+        width: 50px;
+        height: 50px;
+        opacity: 0.5;
+      }
+      </style>
 </head>
 <body>
     <h1 style="font-size: 50px;">Задачи по JavaScript Пр3</h1>
-    <h2 style="font-size: 30px;">Блок 1 - Обработчики событий</h2>
+    <h2 style="font-size: 30px;">Блок 1</h2>
     <h3>Задание 1</h3>
     <p id="header">Исходный заголовок</p>
     <button id="changeHeaderBtn">Изменить заголовок</button>
     <hr>
     <h3>Задание 2</h3>
-    <div class="box">Наведи на меня</div>
+    <div id="block2__task4" class="box">Наведи на меня</div>
     <hr>
     <h3>Задание 3</h3>
     <input type="text" id="inputField" placeholder="Введите текст">
@@ -31,13 +56,117 @@
     <hr>
     <h3>Задание 7</h3>
     <a href="#" id="link">Ссылка</a>
-
+    <hr>
+    <h3>Задание 8</h3>
     <div id="hideMe" style="width:100px;height:50px;background:#eee;margin-top:10px;cursor:pointer;">Кликни чтобы скрыть</div>
-
+    <hr>
+    <h3>Задание 9</h3>
     <input type="text" id="textField" placeholder="Максимум 10 символов" />
-
+    <hr>
+    <h3>Задание 10</h3>
     <button id="toggleButton">Переключить</button>
     <div id="toggleBox" class="inactive" style="width:100px;height:50px;margin-top:10px;">Box</div>
+    <hr>
+    <h2 style="font-size: 30px;">Блок 2</h2>
+    <h3 id="block2__task1">Задание 1</h3>
+    <hr>
+    <h3>Задание 2</h3>
+    <p id="example">Здравствуйте!</p>
+    <hr>
+    <h3>Задание 3</h3>
+    <button class="button active">батон</button>
+    <hr>
+    <h3>Задание 4</h3>
+    <a href="#block2__task4">Блок 1 Задание 2</a>
+    <hr>
+    <h3>Задание 5</h3>
+    <a href="#header">Блок 1 Задание 1</a>
+    <hr>
+    <h3>Задание 6</h3>
+    <button id="myButton">myButton</button>
+    <hr>
+    <h3>Задание 7</h3>
+    <ul id="myList">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+    </ul>
+    <hr>
+    <h3>Задание 8</h3>
+    <p id="deleteMe">Putis</p>
+    <hr>
+    <h3>Задание 9</h3>
+    <a href="#link">Блок 1 Задание 7</a>
+    <hr>
+    <h3>Задание 10</h3>
+    <a href="#example">Блок 2 Задание 2</a>
+    <hr>
+    <h2 style="font-size: 30px;">Блок 3</h2>
+    <h3>Задание 1</h3>
+    <ul>
+        <li class="item">hi</li>
+        <li class="item">hi</li>
+        <li class="item">hi</li>
+    </ul>
+    <hr>
+    <h3>Задание 2</h3>
+    <ul id="productList"></ul>
+    <hr>
+    <h3>Задание 3</h3>
+    <ul id="objectList"></ul>
+    <hr>
+    <h3>Задание 4</h3>
+    <div id="tableContainer"></div>
+    <hr>
+    <h3>Задание 5</h3>
+    <ul>
+        <li id="item1">Пункт 1</li>
+        <li id="item2">Пункт 2</li>
+        <li id="item3">Пункт 3</li>
+    </ul>
+    <hr>
+    <h2 style="font-size: 30px;">Блок 4</h2>  
+    <h3>Задание 1</h3>
+    <div id="gallery"></div>
+    <hr>
+    <h3>Задание 2</h3>
+    <form id="userForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required>
+        
+        <label for="age">Возраст:</label>
+        <input type="number" id="age" name="age" required>
+        
+        <button type="submit">Добавить</button>
+      </form>
+      
+      <table border="1" id="resultTable">
+        <thead>
+          <tr><th>Имя</th><th>Возраст</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+      
+    <hr>
+    <h3>Задание 3</h3>
+    <label for="minPrice">Минимальная цена:</label>
+    <input type="number" id="minPrice" placeholder="Введите минимальную цену" />
+    
+    <table border="1" id="productTable">
+      <thead>
+        <tr>
+          <th>Товар</th>
+          <th>Цена</th>
+          <th>Количество</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+    
     
     <script src="script.js"></script>
 </body>
