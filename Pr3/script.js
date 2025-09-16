@@ -294,7 +294,7 @@ let form = document.getElementById('userForm');
 let tableBody1 = document.getElementById('resultTable').querySelector('tbody');
 
 form.addEventListener('submit', function(event) {
-  event.preventDefault(); // Отменяем стандартную отправку формы
+  event.preventDefault();
   
   let nameInput = form.name;
   let ageInput = form.age;
@@ -302,7 +302,6 @@ form.addEventListener('submit', function(event) {
   let name = nameInput.value.trim();
   let age = Number(ageInput.value);
   
-  // Убираем подсветку при повторной попытке
   ageInput.style.border = '';
   
   if (!name || !ageInput.value) {
@@ -311,30 +310,24 @@ form.addEventListener('submit', function(event) {
   }
   
   if (age < 18) {
-    // Подсвечиваем поле возраста красным и не добавляем в таблицу
     ageInput.style.border = '2px solid red';
     alert('Возраст должен быть не меньше 18');
     return;
   }
   
-  // Создаём новую строку таблицы
   let tr = document.createElement('tr');
   
-  // Создаём ячейки с текстом
   let tdName = document.createElement('td');
   tdName.textContent = name;
   
   let tdAge = document.createElement('td');
   tdAge.textContent = age;
   
-  // Добавляем ячейки в строку
   tr.appendChild(tdName);
   tr.appendChild(tdAge);
   
-  // Добавляем строку в таблицу
   tableBody1.appendChild(tr);
   
-  // Очищаем форму
   form.reset();
 });
 
@@ -351,7 +344,7 @@ let tableBody = document.getElementById('productTable').querySelector('tbody');
 let minPriceInput = document.getElementById('minPrice');
 
 function renderTable(filteredProducts) {
-  tableBody.innerHTML = ''; // очищаем таблицу перед заполнением
+  tableBody.innerHTML = ''; 
   
   filteredProducts.forEach(product => {
     let tr = document.createElement('tr');
@@ -373,17 +366,14 @@ function renderTable(filteredProducts) {
   });
 }
 
-// Изначально отображаем все товары
+
 renderTable(products);
 
-// Обработчик при изменении минимальной цены
 minPriceInput.addEventListener('input', () => {
   let minPrice = Number(minPriceInput.value);
   if (!minPrice) {
-    // Если поле пустое или ноль, показываем все товары
     renderTable(products);
   } else {
-    // Фильтруем по цене
     let filtered = products.filter(p => p.price >= minPrice);
     renderTable(filtered);
   }
