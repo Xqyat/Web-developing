@@ -1,0 +1,599 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+}
+
+.header__burger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 24px;
+    cursor: pointer;
+}
+.burger__line {
+    width: 30px;
+    height: 4px;
+    background-color: #3E356A;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+
+.header__burger.burger--active .burger__line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+.header__burger.burger--active .burger__line:nth-child(2) {
+    opacity: 0;
+}
+.header__burger.burger--active .burger__line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.header__search {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+}
+
+.search__suggestions {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-top: none;
+  max-height: 180px;
+  overflow-y: auto;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  z-index: 1500;
+  display: none;
+}
+.search__suggestions.show {
+  display: block;
+}
+.search__suggestions li {
+  padding: 8px 10px;
+  cursor: pointer;
+}
+.search__suggestions li:hover {
+  background-color: #f0f0f0;
+}
+
+.search__input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.search__button {
+    padding: 0.5rem 1rem;
+    background-color: #3E356A;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.search__button:hover {
+    background-color: #2e274b;
+}
+
+/* Кнопка подписки */
+.header__subscribe-button {
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 14px;
+    background-color: #3E356A;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.header__subscribe-button:hover {
+    background-color: #2e274b;
+}
+
+/* Модальное окно */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    font-family: "Montserrat", sans-serif;
+}
+.modal--active {
+    display: flex;
+}
+.modal__overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.6);
+    top: 0;
+    left: 0;
+}
+.modal__content {
+    position: relative;
+    background: white;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    z-index: 10;
+    text-align: center;
+}
+.modal__close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.modal__title {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 24px;
+}
+.modal__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.modal__input {
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+}
+.modal__submit {
+    padding: 0.7rem;
+    font-weight: 600;
+    background-color: #3E356A;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.modal__submit:hover {
+    background-color: #2e274b;
+}
+
+/* Адаптивность модалки */
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4rem 5rem 0 5rem;
+}
+
+.nav__list {
+    display: flex;
+    padding: 0px;
+    gap: 2rem;
+}
+
+.list__element {
+    list-style: none; 
+    font-weight: 600;  
+    color: #3E356A;
+}
+
+.header__icons {
+    display: flex;
+    gap: 1rem;
+}
+
+main {
+    padding: 0rem 15rem 4rem 15rem;
+}
+
+.SwipeBox {
+    padding: 0rem 2rem;
+    background-color: #D2CFE4;
+    border-radius: 2rem;
+    height: 550px;
+}
+
+.SwipeBox__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.SwipeBox__information {
+    margin-left: 4rem;
+}
+
+.information__title {
+    font-size: 58px;
+    font-weight: 600;
+}
+
+.information__description {
+    font-size: 17px;
+}
+
+.information__btn {
+    background-color: black;
+    color: white;
+    padding: 0.8rem 3rem;
+    border: none;
+    border-radius: 3rem;
+    font-weight: 400;
+    font-size: 19px;
+}
+
+.SwipeBox__img {
+    height: 621px;
+    margin-top: -6.5rem;
+}
+
+.SwipeBox__arrow {
+    width: 16px;
+    height: 30px;
+}
+
+.SwipeBox__lines {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-top: -0.5rem;
+}
+
+.lines__element {
+    margin: 0;
+    background-color: white;
+    border: none;
+    width: 194px;
+    height: 3px;
+}
+
+#firstLine {
+    background-color: black;
+}
+
+
+.techBlocks {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+.techBlocks__blocks {
+    display: grid;
+    grid-template-columns: 1fr repeat(3, 1fr);
+    grid-template-rows: 1.5fr 1fr ;
+    grid-gap: 1.5rem 1rem;
+}
+
+.blocks__element {
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 2rem;
+    overflow: hidden
+}
+
+.blocks__element img {
+    max-width: 100%;
+    height: auto;
+}
+
+#firstBlock {
+    position: relative;
+    max-width: 639px;
+    max-height: 472px;
+    grid-row: 1 ;
+    grid-column: 1 / 3 ;
+    overflow: hidden;
+    text-align: right;
+    padding: 0 2rem;
+    align-items: flex-end;
+}
+
+#firstBlock .element__info {
+    overflow: hidden;
+    background-color: rgb(0, 0, 0);
+    width: 100%;
+    position: absolute;
+    align-items: flex-end;
+    bottom: 0;
+    z-index: 100;
+}
+
+#firstBlock img {
+    align-self: self-start;
+    max-width: auto;
+    max-height: 397px;
+    margin-top: -3rem;
+}
+
+
+#secondBlock {
+    max-width: 639px;
+    max-height: 270px;
+    grid-row: 2;
+    grid-column: 1 / 3;
+    flex-direction: row;
+    padding: 0 2rem;
+    text-align: right;
+}
+
+#secondBlock img {
+    max-height: 680px ;
+}
+
+#thirdBlock {
+    justify-content: center;
+    max-width: 312px;
+    max-height: 722px;
+    grid-row: 1 / 3;
+    grid-column: 3;
+    text-align: center;
+    gap: 2rem;
+}
+
+#thirdBlock img {
+    max-height: 405px ;
+    max-width: 367px;
+    margin-left: 10rem;
+}
+
+#fourthBlock {
+    justify-content: center;
+    gap: 2rem;
+    max-width: 312px;
+    max-height: 722px;
+    grid-row: 1 / 3;
+    grid-column: 4;
+    flex-direction: column-reverse;
+    text-align: center;
+}
+
+#fourthBlock img {
+    max-height: 467px ;
+    max-width: 425px;
+}
+
+.element__info {
+    color: white;
+    max-width: 100%;
+}
+
+.info__title {
+    font-size: 15px;
+    font-weight: 400;
+    margin: 0;
+}
+
+.info__description {
+    margin: 0;
+    font-size: 32px;
+}
+
+.offers {
+    display: flex;
+    flex-direction: column;
+}
+
+.offers__title {
+    font-size: 45px;
+    font-weight: 600;
+}
+
+.offers__block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
+
+.block__offer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem 0.2rem;
+    max-width: 302px;
+    max-height: 396px;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.16);
+    border-radius: 18px;
+}
+
+.block__offer img {
+    max-width: 285px;
+    max-height: 247px;
+}
+
+.offer {
+    padding: 0 1rem;
+}
+
+.offer__title {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.offer__title, .offer__price {
+    color: rgba(62, 53, 106, 1);
+}
+
+.offer__price {
+    font-size: 18px;
+}
+
+footer {
+    background-color: #d8d6e0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 5rem;
+    padding: 2.5rem 0 0 0;
+    margin-bottom: -2.5rem;
+}
+
+
+.footer__img {
+    width: 500px;
+    max-width: 500px;
+    max-height: 500px;
+}
+
+.footer__smalltext {
+    text-align: center;
+    font-size: 10px;
+    color: #3E356A;
+    justify-self: flex-end;
+}
+
+@media screen and (max-width: 1700px) {
+
+    .SwipeBox {
+        height: 450px;
+    }
+    .SwipeBox__information{
+        margin-left: 0;
+    }
+    
+    .SwipeBox__img, .SwipeBox__lines {
+        display: none;
+    }
+
+    .SwipeBox__wrapper {
+        text-align: center;
+    }
+
+    .information__description {
+        font-size: 20px;
+    }
+
+    .SwipeBox__lines {
+        margin-top: 5rem;
+    }
+
+    .offers__block {
+        gap: 1rem;
+    }
+
+}
+
+@media screen and (max-width: 1600px) {
+    
+    #secondBlock  img{
+        height: 500px;
+
+    }
+}
+
+@media screen and (max-width: 1370px) {
+    
+    main {
+        padding: 0rem 2rem 1rem 2rem;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .techBlocks__blocks{
+        grid-template-rows: 1fr 0.5fr;
+    }    
+    #firstBlock img{
+        max-height: 256px;
+        margin-top: -1rem;
+    }
+    #secondBlock img{
+        max-height: 320px;
+    }
+    header {
+        padding: 3rem 1rem 0;
+    }
+    .info__description{
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .header__burger {
+        display: flex;
+    }
+    .header__nav {
+        position: fixed;
+        top: 60px; 
+        right: -260px;
+        width: 240px;
+        height: calc(100vh - 60px);
+        background-color: #f2f2f2;
+        box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
+        padding-top: 1rem;
+        transition: right 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        z-index: 1000;
+    }
+    .header__nav.nav--active {
+        right: 0;
+    }
+    .nav__list {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding-left: 1rem;
+        margin: 0;
+    }
+    .nav__item {
+        font-size: 18px;
+        cursor: pointer;
+    }
+    .header__search {
+        display: none; 
+    }
+
+    .nav__list {
+        display: none;
+    }
+    .information__title {
+        font-size: 35px
+    }
+    .SwipeBox{
+        height: 350px;
+    }
+    .footer__img{
+        width: auto;
+        height: auto;
+    }
+    .techBlocks__blocks{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    #firstBlock, #secondBlock, #thirdBlock, #fourthBlock{
+        
+    }
+}
+@media screen and (max-width: 470px) {
+    .modal__content {
+        padding: 1.5rem;
+    }
+    .modal__title {
+        font-size: 20px;
+    }
+    .modal__input {
+        font-size: 14px;
+    }
+    .modal__submit {
+        font-size: 14px;
+    }
+}

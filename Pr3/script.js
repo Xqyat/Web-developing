@@ -196,13 +196,13 @@ let dataArray = [
   { name: 'eggs', price: 100, quantity: 12 }
 ];
 
-function createTable(data) {
+function createTable(dataArray) {
   let container = document.getElementById('tableContainer');
   let table = document.createElement('table');
   
   let thead = document.createElement('thead');
   let headerRow = document.createElement('tr');
-  Object.keys(data[0]).forEach(key => {
+  Object.keys(dataArray[0]).forEach(key => {
     let th = document.createElement('th');
     th.textContent = key;
     headerRow.appendChild(th);
@@ -211,7 +211,7 @@ function createTable(data) {
   table.appendChild(thead);
   
   let tbody = document.createElement('tbody');
-  data.forEach(item => {
+  dataArray.forEach(item => {
     let tr = document.createElement('tr');
     Object.values(item).forEach(value => {
       let td = document.createElement('td');
@@ -268,16 +268,13 @@ function createGallery(images) {
     group.forEach(image => {
       let img = document.createElement('img');
       img.src = image.url;
-      img.addEventListener('click', () => {
-        // При клике удаляем классы у всех в этом ряду
+      img.addEventListener('click', function()  {
         row.querySelectorAll('img').forEach(imgEl => {
           imgEl.classList.remove('active', 'inactive');
         });
-        // Проходимся по всем, выставляем inactive, кроме выбранного
         row.querySelectorAll('img').forEach(imgEl => {
           if (imgEl !== img) imgEl.classList.add('inactive');
         });
-        // Выбранному ставим класс active
         img.classList.add('active');
       });
       row.appendChild(img);
